@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18-alpine'
+            reuseNode true
+        }
+    }
     
     environment {
         BUILD_FILE_NAME = "laptop.txt"
@@ -7,12 +12,7 @@ pipeline {
 
     stages {
         stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
+
             steps {
                 echo 'Building the app ...'
                 sh '''
