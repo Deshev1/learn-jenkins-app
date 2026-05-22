@@ -5,14 +5,9 @@ pipeline {
             reuseNode true
         }
     }
-    
-    environment {
-        BUILD_FILE_NAME = "laptop.txt"
-    }
 
     stages {
         stage('Build') {
-
             steps {
                 echo 'Building the app ...'
                 sh '''
@@ -28,15 +23,13 @@ pipeline {
             steps {
                 echo 'Testing the app ...'
                 sh '''
+                    test -f build/index.html
                     npm test
                 '''
             }
         }
     }
     post{
-        success{
-            archiveArtifacts artifacts: 'build/**'
-        }
         cleanup {
             cleanWs()
         }
