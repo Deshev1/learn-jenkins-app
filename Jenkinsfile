@@ -8,26 +8,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building a new laptop...'
+                echo 'Building the app ...'
                 sh '''
-                    mkdir -p build
-                    echo "mainboard" >> build/$BUILD_FILE_NAME
-                    cat build/$BUILD_FILE_NAME
-                    echo "display" >> build/$BUILD_FILE_NAME
-                    cat build/$BUILD_FILE_NAME
-                    echo "keyboard" >> build/$BUILD_FILE_NAME
-                    cat build/$BUILD_FILE_NAME
+                    npm install
+                    npm run build
                 '''
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing laptop...'
+                echo 'Testing the app ...'
                 sh '''
-                    test -f build/$BUILD_FILE_NAME
-                    grep -i "mainboard" build/$BUILD_FILE_NAME
-                    grep -i "display" build/$BUILD_FILE_NAME
-                    grep -i "keyboard" build/$BUILD_FILE_NAME
+                    npm test
                 '''
             }
         }
